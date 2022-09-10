@@ -1,0 +1,37 @@
+---
+title: Understanding Kafka
+date: 2022-07-14
+description: This blog consists of my learnings about Kafka, Kafka Components, how it works.
+  - learnings
+banner: 
+---
+
+Starting from the basics :) <br />
+Apache Kafka is a Distributed Stream Processing Software/System developed by LinkedIn and it is written in Scala and Java.
+
+The first key component of kafka is Kafka server or kafka broker, this is the initial server with which users interact with.
+It has resemblance with other servers for example it listens to some TCP connection and accepts some connection.
+
+<img src={E:\goverdhanbiradar\img\Capture.PNG} alt="Image alt" />
+
+As we can see in the above diagram, it consists of two Abstractions, called `Producers` and `Consumers`. Yes! as the name suggests Producers mainly produce and publishes the content
+to `Broker` and then Consumer consumes the content. <br />
+
+And in the middle we have Kafka Broker, this is where all the magic happens, it has a default port `9092`. The other abstraction in kafka is escentially the connection
+to connect with each other using a TCP connection. Thats a raw TCP connection so its a bi-direction which simply means producer can communicate with broker and broker can communicate back with producer hence, vice - versa 
+this similar TCP connection is present between broker and consumer too.
+
+Kafka Broker, this consists of `Topics`, Topics are nothing but the systematic logs which keep records of all the entries into a partition. Kafka broker can have many topics!
+Producer sends continuous streams of messages to broker mentioning topic and if the consumer is interested in a particular message then the Consumer will reach out to the
+particular topic and particular partition. <br />
+
+This is somewhat an overall picture of how Kafka works. Seems easy? Now, lets complicate a bit! <br />
+
+Lets look into an example: As mentioned earlier kafka consists Producer, Consumer and Broker. But in this case, Broker consists of a topic called users. 
+Now, producer wants to publish a string  "Gov" to Users topic, Broker validates the message and logs an entry of the string in the topic. Then again if producer wants to send another message then
+the new message would be stored in the next block in a sequential order. 
+
+Kafka borrowed the concept of data Shrading where the data is divided into parts called partitions and the data inside the partition fetched with the topic name and partition key.
+
+There's another important abstraction of Kafka called `Consumer group`.
+Consumer Groups were mainly built for parallel processing when the system scales. Here, Partitions are allocated to a group of consumers as show above. Where in, that particular group of consumer is responsible for subsribing to the messages in that partitions. 
